@@ -46,10 +46,11 @@ boolean IRCClient::loop() {
       char c = client->read();
       if (c == '\r') {
         client->read(); // discard \n
+        parse(message);
+        message = "";
       } else {
         message += c;
       }
-      parse(message);
     }
     return true;
   }
@@ -67,13 +68,13 @@ boolean IRCClient::connected() {
   if (client == NULL) {
     return false;
   }
-  if (client->connected() == 0 && this->isConnected) {
+  boolean rc = (int)client->connected();
+  if (!rc && this->isConnected) {
     this->isConnected = false;
     client->flush();
     client->stop();
-    return false;
   }
-  return true;
+  return rc;
 }
 
 void IRCClient::sendIRC(String data) {
