@@ -13,74 +13,69 @@
 #include "IRCClient.h"
 
 IRCClient::IRCClient(const char* host, uint16_t port, Client& client) {
-    this->host = host;
-    this->port = port;
-    this->client = &client;
-    this->isConnected = false;
+  this->host = host;
+  this->port = port;
+  this->client = &client;
+  this->isConnected = false;
 }
 
 IRCClient& IRCClient::setCallback(IRC_CALLBACK_SIGNATURE) {
-    this->callback = callback;
-    return *this;
+  this->callback = callback;
+  return *this;
 }
 
 boolean IRCClient::connect(String nickname, String user) {
-    if (!connected()) {
-        int result = client->connect(this->host, this->port);
-        if (result == 1) {
-            sendIRC("HELLO");
-			sendIRC("NICK " + nickname);
-			sendIRC("USER " + user + " 8 * :MCU IRC Client");
-			this->isConnected = true;
-			return true;
-		}
-
-		return false;
+  if (!connected()) {
+    int result = client->connect(this->host, this->port);
+    if (result == 1) {
+      sendIRC("HELLO");
+      sendIRC("NICK " + nickname);
+      sendIRC("USER " + user + " 8 * :MCU IRC Client");
+      this->isConnected = true;
+      return true;
     }
-
-    return true;
+    return false;
+  }
+  return true;
 }
 
 boolean IRCClient::loop() {
-    if (connected() && client->available()) {
-        String message = "";
-        while (client->available()) {
-            char c = client->read();
-			if (c == '\r') {
-				client->read(); // discard \n
-			} else {
-				message += c;
-			}
-			
-			parse(message);
-        }
-        return true;
+  if (connected() && client->available()) {
+    String message = "";
+    while (client->available()) {
+      char c = client->read();
+      if (c == '\r') {
+        client->read(); // discard \n
+      } else {
+        message += c;
+      }
+      parse(message);
     }
-    return false;
+    return true;
+  }
+  return false;
 }
 
 void IRCClient::parse(String data) {
-    // TODO: Parse IRC data
-    if (callback) {
-        callback(data);
-    }
+  // TODO: Parse IRC data
+  if (callback) {
+    callback(data);
+  }
 }
 
 boolean IRCClient::connected() {
-    if (client == NULL) {
-        return false;
-    }
-
-    if (client->connected() == 0 && this->isConnected) {
-        this->isConnected = false;
-        client->flush();
-        client->stop();
-        return false;
-    }
-
-    return true;
+  if (client == NULL) {
+    return false;
+  }
+  if (client->connected() == 0 && this->isConnected) {
+    this->isConnected = false;
+    client->flush();
+    client->stop();
+    return false;
+  }
+  return true;
 }
 
 void IRCClient::sendIRC(String data) {
-    client->print(data + "\r\n");
+  client->print(data + "\r\n");
 }

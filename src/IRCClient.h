@@ -37,7 +37,7 @@ class IRCClient
 
   public:
     IRCClient(const char*, uint16_t, Client& client);
-	IRCClient& setCallback(IRC_CALLBACK_SIGNATURE);
+    IRCClient& setCallback(IRC_CALLBACK_SIGNATURE);
     boolean connect(String nickname, String user);
     boolean loop();
     boolean connected();
