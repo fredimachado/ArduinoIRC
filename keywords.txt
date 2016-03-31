@@ -1,0 +1,21 @@
+#######################################
+# Syntax Coloring Map ArduinoIRC
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+IRCClient	KEYWORD1	IRCClient
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+setCallback	KEYWORD2
+connect	KEYWORD2
+loop	KEYWORD2
+connected	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
