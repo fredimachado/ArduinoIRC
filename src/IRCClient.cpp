@@ -60,7 +60,10 @@ boolean IRCClient::loop() {
 }
 
 void IRCClient::parse(String data) {
-    
+    // TODO: Parse IRC data
+    if (callback) {
+        callback(data);
+    }
 }
 
 boolean IRCClient::connected() {
