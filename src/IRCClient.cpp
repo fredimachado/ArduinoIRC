@@ -54,7 +54,9 @@ boolean IRCClient::loop() {
 			
 			parse(message);
         }
+        return true;
     }
+    return false;
 }
 
 void IRCClient::parse(String data) {
