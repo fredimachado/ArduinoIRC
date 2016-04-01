@@ -28,6 +28,7 @@ boolean IRCClient::connect(String nickname, String user) {
   if (!connected()) {
     int result = client->connect(this->host, this->port);
     if (result == 1) {
+      this->nickname = nickname;
       sendIRC("HELLO");
       sendIRC("NICK " + nickname);
       sendIRC("USER " + user + " 8 * :MCU IRC Client");
@@ -58,10 +59,61 @@ boolean IRCClient::loop() {
 }
 
 void IRCClient::parse(String data) {
-  // TODO: Parse IRC data
-  if (callback) {
-    callback(data);
+  String original(data);
+  String prefix;
+  String nick;
+  String user;
+  String host;
+
+  if (data[0] == ':') {
+    prefix = data.substring(1, data.indexOf(" ") - 1);
+    int index = prefix.indexOf("@");
+    if (index != -1) {
+      nick = prefix.substring(0, index);
+      host = prefix.substring(index);
+    }
+    index = nick.indexOf("!");
+    if (index != -1) {
+      String temp = nick;
+      nick = temp.substring(0, index);
+      user = temp.substring(index);
+    }
+
+    data = data.substring(data.indexOf(" ") + 1);
   }
+
+  String command = data.substring(0, data.indexOf(" "));
+  command.toUpperCase();
+
+  data = data.substring(data.indexOf(" ") + 1);
+
+  if (command == "PING") {
+    sendIRC("PONG " + data);
+    executeCallback("Ping? Pong!");
+    return;
+  }
+
+  if (command == "PRIVMSG") {
+    int index = data.indexOf(" ");
+    String to = data.substring(0, index);
+    String text = data.substring(index + 2);
+
+    if (text[0] == '\001') { // CTCP
+      text = text.substring(1, text.length() - 1);
+      executeCallback("[" + nick + " requested CTCP " + text +"]");
+      if (to == this->nickname) {
+        if (text == "VERSION") {
+          sendIRC("NOTICE " + nick + " :\001VERSION Open source MCU IRC client by Fredi Machado - https://github.com/Fredi/ArduinoIRC \001");
+          return;
+        }
+        // CTCP not implemented
+        sendIRC("NOTICE " + nick + " :\001ERRMSG " + text + " :Not implemented\001");
+        return;
+      }
+    }
+  }
+
+  executeCallback(original);
 }
 
 boolean IRCClient::connected() {
@@ -79,4 +131,13 @@ boolean IRCClient::connected() {
 
 void IRCClient::sendIRC(String data) {
   client->print(data + "\r\n");
+  if (debugDataSent) {
+    executeCallback("SENT: " + data);
+  }
+}
+
+void IRCClient::executeCallback(String data) {
+  if (callback) {
+    callback(data);
+  }
 }

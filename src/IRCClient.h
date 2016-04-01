@@ -34,6 +34,7 @@ class IRCClient
     String nickname;
     void sendIRC(String data);
     void parse(String data);
+    void executeCallback(String data);
 
   public:
     IRCClient(const char*, uint16_t, Client& client);
@@ -41,6 +42,7 @@ class IRCClient
     boolean connect(String nickname, String user);
     boolean loop();
     boolean connected();
+    bool debugDataSent;
 };
 
 #endif /* IRCClient_h */
