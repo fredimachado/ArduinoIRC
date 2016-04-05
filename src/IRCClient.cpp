@@ -159,3 +159,12 @@ void IRCClient::executeCallback(IRCMessage ircMessage) {
     callback(ircMessage);
   }
 }
+
+void IRCClient::sendRaw(String rawData) {
+  sendIRC(rawData);
+}
+
+void IRCClient::sendMessage(String to, String message) {
+  String rawData("PRIVMSG " + to + " :" + message);
+  sendIRC(rawData);
+}

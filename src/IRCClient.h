@@ -47,6 +47,8 @@ class IRCClient
     boolean connect(String nickname, String user);
     boolean loop();
     boolean connected();
+    void sendRaw(String data);
+    void sendMessage(String to, String message);
 };
 
 #endif /* IRCClient_h */

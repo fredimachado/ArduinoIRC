@@ -12,10 +12,12 @@ IRCClient	KEYWORD1	IRCClient
 # Methods and Functions (KEYWORD2)
 #######################################
 setCallback	KEYWORD2
-setSentCallback KEYWORD2
+setSentCallback	KEYWORD2
 connect	KEYWORD2
 loop	KEYWORD2
 connected	KEYWORD2
+SendRaw	KEYWORD2
+SendMessage	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
