@@ -34,6 +34,7 @@ void setup() {
   WiFi.printDiag(Serial);
 
   client.setCallback(callback);
+  client.setSentCallback(debugSentCallback);
 }
 
 void loop() {
@@ -53,7 +54,16 @@ void loop() {
   client.loop();
 }
 
-void callback(String data) {
-  Serial.println(data);
+void callback(IRCMessage ircMessage) {
+  // PRIVMSG ignoring CTCP messages
+  if (ircMessage.command == "PRIVMSG" && ircMessage.text[0] != '\001') {
+    String message("<" + ircMessage.nick + "> " + ircMessage.text);
+    Serial.println(message);
+    return;
+  }
+  Serial.println(ircMessage.original);
 }
 
+void debugSentCallback(String data) {
+  Serial.println(data);
+}
