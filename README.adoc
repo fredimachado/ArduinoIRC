@@ -1,18 +1,18 @@
-= IRC Client Library for Arduino =
+= IRC Client Library for Arduino image:https://travis-ci.org/Fredi/ArduinoIRC.svg?branch=master["Build Status", link="https://travis-ci.org/Fredi/ArduinoIRC"]
 
 Connects your arduino project to an IRC server.
 
-== Features ==
+== Features
 
 * Easy connection to an IRC server through a Client implementation;
 * Receive parsed IRC messages through a callback function;
 * Send raw messages to the server or messages to a channel or user;
 
-== Usage ==
+== Usage
 
 See the examples...
 
-== License ==
+== License
 
 Copyright (c) 2016 Fredi Machado. All right reserved.
 
