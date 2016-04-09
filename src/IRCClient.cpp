@@ -1,5 +1,5 @@
 /*
-  IRCClient.cpp - Internet Relay Chat library v0.0.2 - 2016-4-4
+  IRCClient.cpp - Internet Relay Chat library v0.1.0 - 2016-4-9
   Copyright (C) 2016 Fredi Machado.  All rights reserved.
 
   This library is free software; you can redistribute it and/or
