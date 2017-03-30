@@ -12,6 +12,10 @@ Connects your arduino project to an IRC server.
 
 See the examples...
 
+== Contribution
+
+Just send a pull request! :)
+
 == License
 
 Copyright (c) 2016 Fredi Machado. All right reserved.
