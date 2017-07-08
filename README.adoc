@@ -1,4 +1,4 @@
-= IRC Client Library for Arduino image:https://travis-ci.org/Fredi/ArduinoIRC.svg?branch=master["Build Status", link="https://travis-ci.org/Fredi/ArduinoIRC"]
+= IRC Client Library for Arduino image:https://travis-ci.org/fredimachado/ArduinoIRC.svg?branch=master["Build Status", link="https://travis-ci.org/Fredi/ArduinoIRC"]
 
 Connects your arduino project to an IRC server.
 
