@@ -45,6 +45,7 @@ class IRCClient
     IRCClient& setCallback(IRC_CALLBACK_SIGNATURE);
     IRCClient& setSentCallback(IRC_SENTCALLBACK_SIGNATURE);
     boolean connect(String nickname, String user);
+    boolean connectTwitch(String nickname, String user, String password);
     boolean loop();
     boolean connected();
     void sendRaw(String data);

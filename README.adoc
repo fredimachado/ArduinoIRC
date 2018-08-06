@@ -7,6 +7,7 @@ Connects your arduino project to an IRC server.
 * Easy connection to an IRC server through a Client implementation;
 * Receive parsed IRC messages through a callback function;
 * Send raw messages to the server or messages to a channel or user;
+* Supports Twitch Chat
 
 == Usage
 

@@ -45,6 +45,22 @@ boolean IRCClient::connect(String nickname, String user) {
   return true;
 }
 
+boolean IRCClient::connectTwitch(String nickname, String user, String password) {
+  if (!connected()) {
+    int result = client->connect(this->host, this->port);
+    if (result == 1) {
+      this->nickname = nickname;
+      sendIRC("PASS " + password);
+      sendIRC("NICK " + nickname);
+      sendIRC("JOIN " + user);
+      this->isConnected = true;
+      return true;
+    }
+    return false;
+  }
+  return true;
+}
+
 boolean IRCClient::loop() {
   if (connected() && client->available()) {
     String message = "";
