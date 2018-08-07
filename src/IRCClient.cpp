@@ -29,30 +29,18 @@ IRCClient& IRCClient::setSentCallback(IRC_SENTCALLBACK_SIGNATURE) {
   return *this;
 }
 
-boolean IRCClient::connect(String nickname, String user) {
+boolean IRCClient::connect(String nickname, String user, String password) {
   if (!connected()) {
     int result = client->connect(this->host, this->port);
     if (result == 1) {
       this->nickname = nickname;
       sendIRC("HELLO");
+      if(password != "")
+      {
+        sendIRC("PASS " + password);
+      }
       sendIRC("NICK " + nickname);
       sendIRC("USER " + user + " 8 * :Arduino IRC Client");
-      this->isConnected = true;
-      return true;
-    }
-    return false;
-  }
-  return true;
-}
-
-boolean IRCClient::connectTwitch(String nickname, String user, String password) {
-  if (!connected()) {
-    int result = client->connect(this->host, this->port);
-    if (result == 1) {
-      this->nickname = nickname;
-      sendIRC("PASS " + password);
-      sendIRC("NICK " + nickname);
-      sendIRC("JOIN " + user);
       this->isConnected = true;
       return true;
     }

@@ -79,7 +79,9 @@ void loop() {
   if (!client.connected()) {
     Serial.println("Attempting to connect to " + ircChannel );
     // Attempt to connect
-    if (client.connectTwitch(TWITCH_BOT_NAME, ircChannel, TWITCH_OAUTH_TOKEN)) {
+    // Second param is not needed by Twtich
+    if (client.connect(TWITCH_BOT_NAME, "", TWITCH_OAUTH_TOKEN)) {
+      client.sendRaw("JOIN " + ircChannel);
       Serial.println("connected and ready to rock");
       sendTwitchMessage("Ready to go Boss!");
     } else {
